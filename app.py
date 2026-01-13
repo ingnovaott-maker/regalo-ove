@@ -1,73 +1,81 @@
 import streamlit as st
 
-# Configuración visual
-st.set_page_config(page_title="Trivia", page_icon="💖")
+# Configuración de página
+st.set_page_config(page_title="Para la más linda", page_icon="💖")
 
-# Diseño con CSS para fondo de corazones y estilo romántico
+# CSS que respeta el tema del sistema (Claro/Oscuro)
 st.markdown("""
     <style>
+    /* Fondo con corazones sutiles */
     .stApp {
-        background-color: #fff0f3;
         background-image: url("https://www.transparenttextures.com/patterns/cuis-hearts.png");
     }
-    .titulo {
-        color: #c9184a;
-        text-align: center;
-        font-family: 'Arial', sans-serif;
-    }
+    
+    /* Contenedor adaptativo para el premio */
     .premio-box {
-        background-color: white;
         padding: 25px;
         border-radius: 20px;
-        border: 3px dashed #ff4d6d;
+        border: 2px solid #ff4d6d;
         text-align: center;
-        box-shadow: 10px 10px 15px rgba(0,0,0,0.1);
+        background-color: rgba(255, 77, 109, 0.1);
+        margin-top: 20px;
+    }
+    
+    /* Título que resalta en ambos temas */
+    .titulo-romantico {
+        text-align: center;
+        color: #ff4d6d;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# Lógica de intentos
+# Lógica de estados
 if 'intentos' not in st.session_state:
     st.session_state.intentos = 0
 if 'acerto' not in st.session_state:
     st.session_state.acerto = False
 
-st.markdown("<h1 class='titulo'>✨ Una pregunta especial ✨</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='titulo-romantico'>✨ Una pregunta para ti ✨</h1>", unsafe_allow_html=True)
 
-# Imagen decorativa
+# Imagen central
 st.image("https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=500&auto=format", use_container_width=True)
 
 if not st.session_state.acerto:
     if st.session_state.intentos < 2:
-        respuesta = st.text_input("¿Quién es la niña más linda?", placeholder="Escribe aquí...")
+        # El widget de texto de Streamlit cambia de color automáticamente según el tema del móvil
+        respuesta = st.text_input("¿Quién es la niña más linda?", placeholder="Escribe tu respuesta aquí...")
         
         if st.button("Enviar respuesta ❤️"):
             nombre_limpio = respuesta.strip().capitalize()
-            if nombre_limpio in ["Thelma", "Thelmis","thelma","thelmis"]:
+            if nombre_limpio in ["Thelma", "Thelmis","thelma","Thelmis"]:
                 st.session_state.acerto = True
                 st.rerun()
             else:
                 st.session_state.intentos += 1
                 if st.session_state.intentos == 1:
-                    st.warning("⚠️ Respuesta incorrecta... piénsalo bien, ¡te queda un solo intento!")
+                    st.warning("⚠️ ¡Incorrecto! Piénsalo bien... te queda un solo intento.")
                 else:
-                    st.error("💔 Te quedaste sin intentos...")
+                    st.error("💔 Se agotaron los intentos...")
     else:
-        if st.button("Reintentar"):
+        if st.button("Intentar de nuevo 🔄"):
             st.session_state.intentos = 0
             st.rerun()
 else:
-    # Pantalla de victoria
+    # Efectos visuales de celebración
     st.balloons()
     st.snow()
-    st.markdown("<h2 style='text-align: center; color: #ff4d6d;'>¡ACERTASTE! 😍</h2>", unsafe_allow_html=True)
+    
+    st.markdown("<h2 style='text-align: center;'>¡SÍ! 😍</h2>", unsafe_allow_html=True)
+    
+    # Cuadro de premio
     st.markdown("""
         <div class="premio-box">
-            <h2 style='color: #c9184a;'>🎁 ¡Te has ganado un premio!</h2>
-            <p style='font-size: 1.3rem; color: #590d22;'>
-                <b>Pide algo rico yo lo pago...</b> <br>
-                Dime qué quieres comer y lo pedimos ahora mismo. 🍔🍕🍣
-                Toma captura de pantalla y enviamela a whatsapp
+            <h2 style='color: #ff4d6d;'>🎁 ¡TE HAS GANADO UN PREMIO!</h2>
+            <p style='font-size: 1.2rem;'>
+                Eres la niña más linda. Pide algo rico, <b>yo lo pago.</b> 🍔🍕 Sushi, pizza... ¡tú eliges!
+                Mandame captura al whatsapp
             </p>
         </div>
     """, unsafe_allow_html=True)
