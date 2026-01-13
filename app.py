@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Configuración de página
-st.set_page_config(page_title="Para la más linda", page_icon="💖")
+st.set_page_config(page_title="Trivia", page_icon="💖")
 
 # CSS que respeta el tema del sistema (Claro/Oscuro)
 st.markdown("""
@@ -79,3 +79,4 @@ else:
             </p>
         </div>
     """, unsafe_allow_html=True)
+
